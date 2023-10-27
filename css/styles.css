@@ -105,38 +105,41 @@ hr {
     visibility: visible;
 }
 
-/* Media Query para 700px o menos */
 @media (max-width: 700px) {
-    body {
-        font-size: 14px;
-    }
-
-    hr {
-        width: 300px;
-    }
-
-    #board {
-        width: 253.25px;
-        height: 253px;
-    }
-
-    .cuadrados,
-    .tapados {
-        width: 27.78px;
-        height: 27.78px;
-        font-size: 12px;
-    }
-
-    #digitos {
-        margin: 0 50px;
-    }
-
-    .numeros {
-        width: 27.78px;
-        height: 27.78px;
-        font-size: 12px;
-        margin: 1px;
-    }
+    
+body {
+    width: 100vw;
+    height: 100vh;
 }
 
+hr {
+    width: 70%;
+}
 
+#board {
+    max-width: 450px;
+    height: 300px;
+    width: 80%; 
+}
+
+.cuadrados {
+    width: 11.11%; 
+    height: 11.11%; 
+}
+
+.tapados {
+    width: 11.11%;
+    height: 11.11%; 
+}
+
+#digitos {
+    width: 70%;
+    max-width: 500px;
+}
+
+.numeros {
+    width: 9%; 
+    height: 9%; 
+}
+
+}
