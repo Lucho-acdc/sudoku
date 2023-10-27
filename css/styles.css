@@ -28,7 +28,7 @@ hr {
 }
 
 .cuadrados {
-    width: 50px;
+    width: calc(100% / 9);
     border: 1px solid black;
 
     /* numeros */
@@ -42,7 +42,7 @@ hr {
 }
 
 .tapados {
-    width: 50px;
+    width: calc(100% / 9);
     border: 1px solid black;
 
     /* numeros */
@@ -64,7 +64,7 @@ hr {
 }
 
 .numeros {
-    width: 46px;
+    width: calc(100% / 10);
     height: 50px;
     border: 2px solid black;
 
@@ -105,41 +105,3 @@ hr {
     visibility: visible;
 }
 
-@media (max-width: 700px) {
-    
-body {
-    width: 100vw;
-    height: 100vh;
-}
-
-hr {
-    width: 70%;
-}
-
-#board {
-    max-width: 450px;
-    height: 300px;
-    width: 80%; 
-}
-
-.cuadrados {
-    width: 11.11%; 
-    height: 11.11%; 
-}
-
-.tapados {
-    width: 11.11%;
-    height: 11.11%; 
-}
-
-#digitos {
-    width: 70%;
-    max-width: 500px;
-}
-
-.numeros {
-    width: 9%; 
-    height: 9%; 
-}
-
-}
