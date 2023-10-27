@@ -105,5 +105,38 @@ hr {
     visibility: visible;
 }
 
+/* Media Query para 700px o menos */
+@media (max-width: 700px) {
+    body {
+        font-size: 14px;
+    }
+
+    hr {
+        width: 300px;
+    }
+
+    #board {
+        width: 253.25px;
+        height: 253px;
+    }
+
+    .cuadrados,
+    .tapados {
+        width: 27.78px;
+        height: 27.78px;
+        font-size: 12px;
+    }
+
+    #digitos {
+        margin: 0 50px;
+    }
+
+    .numeros {
+        width: 27.78px;
+        height: 27.78px;
+        font-size: 12px;
+        margin: 1px;
+    }
+}
 
 
