@@ -9,6 +9,58 @@ const numerosFila7 = [3, 4, 5, 6, 7, 8, 9, 1, 2];
 const numerosFila8 = [6, 7, 8, 9, 1, 2, 3, 4, 5];
 const numerosFila9 = [9, 1, 2, 3, 4, 5, 6, 7, 8];
 
+const elegirDificultad = document.getElementById("elegir-dificultad");
+const facil = document.getElementById("facil");
+const medio = document.getElementById("medio");
+const dificil = document.getElementById("dificil");
+const picante = document.getElementById("picante");
+
+const reiniciar = document.getElementById("reiniciar");
+const nuevo = document.getElementById("nuevo");
+
+reiniciar.addEventListener("click", () => {
+    const elementosDestapados = document.querySelectorAll(".destapado");
+
+    elementosDestapados.forEach((elemento) => {
+        elemento.classList.remove("destapado");
+        elemento.classList.add("tapado");
+
+    for (let i = 1; i <=9; i++) {
+        let numero = document.getElementById(i)
+        numero.classList.remove("numero-finalizado");
+}
+});
+});
+
+
+nuevo.addEventListener("click", () => {
+    location.reload();
+});
+
+
+let dificultadElegida = "";
+
+facil.addEventListener("click", () => {
+    elegirModo("facil");
+});
+
+medio.addEventListener("click", () => {
+    elegirModo("medio");
+});
+
+dificil.addEventListener("click", () => {
+    elegirModo("dificil");
+});
+
+picante.addEventListener("click", () => {
+    elegirModo("picante");
+});
+
+function elegirModo (dificultad) {
+    dificultadElegida = dificultad;
+    dificultadFinal();
+}
+
 function aleatorio() {
     return Math.floor(Math.random() * 9) + 1;
 }
@@ -340,17 +392,57 @@ function taparNumeros() {
 
 };
 
-function dificultad() {
-    while (cuadradosOcultos.length < 40) {
-        taparNumeros();
+function dificultadFinal() {
+    switch (dificultadElegida) {
+        case "facil":
+            while (cuadradosOcultos.length < 30) {
+                taparNumeros();
+            }
+            elegirDificultad.style.display = "none";
+
+            const numerosTablerosFacil = document.querySelectorAll(".cuadrados");
+            numerosTablerosFacil.forEach((numero) => {
+                numero.addEventListener("click", compararNumeros);
+            });
+            break;
+
+        case "medio":
+            while (cuadradosOcultos.length < 45) {
+                taparNumeros();
+            }
+            elegirDificultad.style.display = "none";
+
+            const numerosTablerosMedio = document.querySelectorAll(".cuadrados");
+            numerosTablerosMedio.forEach((numero) => {
+                numero.addEventListener("click", compararNumeros);
+            });
+            break;
+
+        case "dificil":
+            while (cuadradosOcultos.length < 60) {
+                taparNumeros();
+            }
+            elegirDificultad.style.display = "none";
+
+            const numerosTablerosDificil = document.querySelectorAll(".cuadrados");
+            numerosTablerosDificil.forEach((numero) => {
+                numero.addEventListener("click", compararNumeros);
+            });
+            break;
+
+        case "picante":
+            while (cuadradosOcultos.length < 70) {
+                taparNumeros();
+            }
+            elegirDificultad.style.display = "none";
+
+            const numerosTablerosPicante = document.querySelectorAll(".cuadrados");
+            numerosTablerosPicante.forEach((numero) => {
+                numero.addEventListener("click", compararNumeros);
+            });
+            break;
     }
-
-    const numerosTableros = document.querySelectorAll(".cuadrados");
-    numerosTableros.forEach((numero) => {
-    numero.addEventListener("click", compararNumeros);
-    });
-
-};
+}
 
 function seleccionarNumero(event) {
 
@@ -369,6 +461,38 @@ function seleccionarNumero(event) {
     return numeroActual.innerText;
 };
 
+function numerosDestapadosCompletados() {
+    const numerosDestapados = document.querySelectorAll(".cuadrados");
+    const numerosEnTablero = {};
+
+    numerosDestapados.forEach((cuadrado) => {
+        const numero = cuadrado.innerText;
+        if (!numerosEnTablero[numero]) {
+            numerosEnTablero[numero] = 1;
+        } else {
+            numerosEnTablero[numero]++;
+        }
+    });
+
+    const seguimientoArray = {
+        1: 9,
+        2: 9,
+        3: 9,
+        4: 9,
+        5: 9,
+        6: 9,
+        7: 9,
+        8: 9,
+        9: 9,
+    };
+
+    for (const numero in numerosEnTablero) {
+        const instanciasRestantes = 9 - numerosEnTablero[numero];
+        seguimientoArray[numero] = instanciasRestantes;
+    }
+
+    return seguimientoArray;
+}
 
 
 window.onload = function() {
@@ -381,11 +505,17 @@ window.onload = function() {
 
     tablero();
     agregarBordes();
-    setTimeout(dificultad, 10);
+    elegirModo();
 
     const numeroActual = "";
 
 };
+
+function todoCompleto(seguimiento, numero) {
+    return seguimiento[numero] === 0;
+}
+
+let contenidoOculto = ""
 
 function compararNumeros(event) {
     
@@ -393,24 +523,46 @@ function compararNumeros(event) {
     const contenido = cuadradoSeleccionado.innerText;
 
     if(contenido.length == "0") {
-        const contenidoOculto = cuadradoSeleccionado.children[0]
+        contenidoOculto = cuadradoSeleccionado.children[0]
         console.log(`el numero oculto es ${contenidoOculto.textContent}`);
         
         if(numeroActual.innerText === contenidoOculto.textContent) {
             contenidoOculto.classList.remove("tapado");
             contenidoOculto.classList.add("destapado");
-            console.log("Luchito lo estas logrando")
+            console.log("Luchito lo estas logrando");
+
+            const seguimientoArrayInicial = numerosDestapadosCompletados();
+            const numero1LlegoACero = todoCompleto(seguimientoArrayInicial, "1");
+            for (let i = 1; i <=9; i++) {
+                const llegoACero = todoCompleto(seguimientoArrayInicial, i);
+                if (llegoACero) {
+                    let numero = document.getElementById(i)
+                    numero.classList.add("numero-finalizado");
+            }
+            }
+
+            numeroActual.classList.remove("numero-seleccionado");
+            numeroActual = "";
         } else {
             Toastify({
-                text: "Número incorrecto, sigue intentando",
+                text: "No me quemeeee",
                 duration: 2000,
                 gravity: "bottom",
                 backgroundColor: "red",
             }).showToast();
+
+            numeroActual.classList.remove("numero-seleccionado");
+            numeroActual = "";
+
         }
     } else {
-        console.log(`Aca no se hace nada.`);
+        Toastify({
+                text: "Este numero no se puede modificar",
+                duration: 2000,
+                gravity: "bottom",
+                backgroundColor: "red",
+            }).showToast();
     }
 
-
 };
+
